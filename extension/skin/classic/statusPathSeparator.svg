@@ -17,38 +17,38 @@
        id="linearGradient3763">
       <stop
          id="stop3765"
-         style="stop-color:#181e24;stop-opacity:1"
+         style="stop-color:#acacc6;stop-opacity:1"
          offset="0" />
       <stop
          id="stop3767"
-         style="stop-color:#28313c;stop-opacity:1"
+         style="stop-color:#b8b8ce;stop-opacity:1"
          offset="1" />
     </linearGradient>
     <linearGradient
        id="linearGradient3755">
       <stop
          id="stop3757"
-         style="stop-color:#080a0c;stop-opacity:1"
+         style="stop-color:#a0a0be;stop-opacity:1"
          offset="0" />
       <stop
          id="stop3759"
-         style="stop-color:#181e24;stop-opacity:1"
+         style="stop-color:#acacc6;stop-opacity:1"
          offset="1" />
     </linearGradient>
     <linearGradient
-       x1="3.5502527"
-       y1="3.4813588"
-       x2="1.7923033"
-       y2="0.25434127"
+       x1="3.6164639"
+       y1="3.8925982"
+       x2="1.2852844"
+       y2="-0.75689912"
        id="linearGradient3761"
        xlink:href="#linearGradient3755"
        gradientUnits="userSpaceOnUse"
        gradientTransform="matrix(1,0,0,0.86842105,0,1046.2569)" />
     <linearGradient
-       x1="2.5476124"
-       y1="4.791533"
-       x2="0.14650781"
-       y2="-0.0087109143"
+       x1="2.2317877"
+       y1="4.1616259"
+       x2="0.62937421"
+       y2="0.96564001"
        id="linearGradient3769"
        xlink:href="#linearGradient3763"
        gradientUnits="userSpaceOnUse"
