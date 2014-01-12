@@ -9,8 +9,9 @@ define([
     "firebug/lib/css",
     "firebug/lib/wrapper",
     "firebug/lib/array",
+    "firebug/debugger/sourceSearch"
 ],
-function(Firebug, FBTrace, Obj, Http, Dom, Css, Wrapper, Arr) {
+function(Firebug, FBTrace, Obj, Http, Dom, Css, Wrapper, Arr, SourceSearch) {
 
 "use strict";
 
@@ -625,6 +626,17 @@ SourceEditor.prototype =
     lastLineNo: function()
     {
         return this.editorObject.lastLine();
+    },
+
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+    // Line API
+
+    find: function(text, options)
+    {
+        if (!this.sourceSearch)
+            this.sourceSearch = new SourceSearch(this);
+
+        this.sourceSearch.findNext(text, options);
     },
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //

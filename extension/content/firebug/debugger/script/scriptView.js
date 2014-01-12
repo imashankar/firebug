@@ -292,7 +292,6 @@ ScriptView.prototype = Obj.extend(new EventSource(),
             this.currentSearch = {text: text, start: 0};
         }
 
-        // xxxHonza: this.editor.find doesn't exist
         var offset = this.editor.find(text, options);
         Trace.sysout("search", {options: options, offset: offset});
 

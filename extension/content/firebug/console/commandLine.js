@@ -647,9 +647,7 @@ var CommandLine = Obj.extend(Module,
         var context = Firebug.currentContext;
 
         if (!this.autoCompleter.handleKeyPress(event, context))
-        {
             this.handleKeyPress(event);
-        }
     },
 
     handleKeyPress: function(event)
