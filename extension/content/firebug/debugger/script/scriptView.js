@@ -6,13 +6,15 @@ define([
     "firebug/lib/dom",
     "firebug/lib/css",
     "firebug/lib/events",
+    "firebug/lib/options",
     "firebug/chrome/eventSource",
     "firebug/chrome/menu",
     "firebug/chrome/infotip",
     "firebug/chrome/firefox",
     "firebug/editor/sourceEditor",
 ],
-function(FBTrace, Obj, Dom, Css, Events, EventSource, Menu, InfoTip, Firefox, SourceEditor) {
+function(FBTrace, Obj, Dom, Css, Events, Options, EventSource, Menu, InfoTip, Firefox,
+    SourceEditor) {
 
 "use strict";
 
@@ -231,12 +233,13 @@ ScriptView.prototype = Obj.extend(new EventSource(),
             }
         }
 
-        var curDoc = this.searchCurrentDoc(!Firebug.searchGlobal, text, reverse);
-        if (!curDoc && Firebug.searchGlobal)
+        var curDoc = this.searchCurrentDoc(!Options.get("searchGlobal"), text, reverse);
+        if (!curDoc && Options.get("searchGlobal"))
         {
             return this.searchOtherDocs(text, reverse) ||
                 this.searchCurrentDoc(true, text, reverse);
         }
+
         return curDoc;
     },
 
@@ -285,20 +288,23 @@ ScriptView.prototype = Obj.extend(new EventSource(),
         {
             options.start = this.currentSearch.start;
             if (reverse)
-                options.start -= text.length + 1;
+                options.start.ch -= 1;
         }
         else
         {
-            this.currentSearch = {text: text, start: 0};
+            this.currentSearch = {text: text, start: null};
         }
 
-        var offset = this.editor.find(text, options);
-        Trace.sysout("search", {options: options, offset: offset});
+        var offsets = this.editor.find(text, this.currentSearch.start, options);
 
-        if (offset != -1)
+        FBTrace.sysout("search", {options: options, offsets: offsets});
+        if (offsets)
         {
-            this.editor.setSelection(offset, offset + text.length);
-            this.currentSearch.start = offset + text.length;
+
+            var characterOffsets = this.editor.getCharacterOffsets(offsets.start, offsets.end);
+            this.scrollToLine(offsets.start.line + 1, {highlight: true});
+            this.editor.setSelection(characterOffsets.start, characterOffsets.end);
+            this.currentSearch.start = offsets.end;
             return true;
         }
 

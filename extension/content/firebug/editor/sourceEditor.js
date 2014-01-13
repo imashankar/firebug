@@ -430,6 +430,33 @@ SourceEditor.prototype =
         return this.getDocument().lineCount();
     },
 
+    getCharacterOffsets: function(start, end)
+    {
+        var startOffset = 0;
+        var endOffset = 0;
+
+        // Count the chars of the lines before the
+        // end/start lines, including newlines.
+        for (var i = 0; i < end.line; i++)
+        {
+            var lineCharCount = this.getCharCount(i);
+            if (start.line > i)
+                startOffset += lineCharCount + 1;
+
+            endOffset += lineCharCount + 1;
+        }
+
+        // Add the number of chars between the first char
+        // of the lines and cursor position.
+        startOffset += start.ch;
+        endOffset += end.ch;
+
+        return {
+            start: startOffset,
+            end: endOffset
+        };
+    },
+
     getSelectedText: function()
     {
         return this.editorObject.getSelection();
@@ -501,29 +528,8 @@ SourceEditor.prototype =
     {
         var start = this.getCursor("start");
         var end = this.getCursor("end");
-        var startOffset = 0;
-        var endOffset = 0;
 
-        // Count the chars of the lines before the
-        // end/start lines, including newlines.
-        for (var i = 0; i < end.line; i++)
-        {
-            var lineCharCount = this.getCharCount(i);
-            if (start.line > i)
-                startOffset += lineCharCount + 1;
-
-            endOffset += lineCharCount + 1;
-        }
-
-        // Add the number of chars between the first char
-        // of the lines and cursor position.
-        startOffset += start.ch;
-        endOffset += end.ch;
-
-        return {
-            start: startOffset,
-            end: endOffset
-        };
+        return getNumericalOffsets(start, end);
     },
 
     hasSelection: function()
@@ -631,12 +637,12 @@ SourceEditor.prototype =
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
     // Line API
 
-    find: function(text, options)
+    find: function(text, start, options)
     {
         if (!this.sourceSearch)
             this.sourceSearch = new SourceSearch(this);
 
-        this.sourceSearch.findNext(text, options);
+        return this.sourceSearch.findNext(text, start, options);
     },
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
